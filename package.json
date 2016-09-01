@@ -1,18 +1,18 @@
 {
     "name": "atom-build-waf",
-    "main": "./lib/atom-build-waf",
-    "version": "0.0.0",
     "description": "Runs waf through the atom-build interface",
+    "version": "0.0.0",
     "keywords": [
         "build",
         "compile",
         "waf"
     ],
-    "repository": "https://github.com/atom/atom-build-waf",
+    "repository": "https://github.com/jimtahu/atom-build-waf",
     "license": "MIT",
     "engines": {
         "atom": ">=1.0.0 <2.0.0"
     },
+    "main": "./lib/atom-build-waf",
     "providedServices": {
           "builder": {
             "description": "Runs Waf",
