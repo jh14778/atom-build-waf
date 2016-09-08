@@ -32,7 +32,7 @@ describe('AtomBuildWaf', () => {
       expect(builder.isEligible(directory)).toBe(true);
     });
 
-    it('should list the default target', () => {
+    it('should list the default targets', () => {
       waitsForPromise(() => {
         return Promise.resolve(builder.settings(directory)).then((settings) => {
         expect(settings.length).toBe(3); // default, configure, clean
@@ -40,8 +40,19 @@ describe('AtomBuildWaf', () => {
         const defaultTarget = settings[0]; // default MUST be first
         expect(defaultTarget.name).toBe('Waf: default (no target)');
         expect(defaultTarget.exec).toBe('waf');
-        expect(defaultTarget.args).toEqual([ '-j8' ]);
         expect(defaultTarget.sh).toBe(false);
+
+        const configureTarget = settings[1]; // configure will be second
+        expect(configureTarget.name).toBe('Waf: configure');
+        expect(configureTarget.exec).toBe('waf');
+        expect(configureTarget.args).toEqual([ 'configure' ]);
+        expect(configureTarget.sh).toBe(false);
+
+        const cleanTarget = settings[2]; // clean will be third
+        expect(cleanTarget.name).toBe('Waf: clean');
+        expect(cleanTarget.exec).toBe('waf');
+        expect(cleanTarget.args).toEqual([ 'clean' ]);
+        expect(cleanTarget.sh).toBe(false);
         });
       });
     });
