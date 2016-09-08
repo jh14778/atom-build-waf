@@ -8,6 +8,7 @@ import { provideBuilder } from '../lib/atom-build-waf';
 describe('AtomBuildWaf', () => {
   let directory;
   let builder;
+  const setJobCount = 7;
   const Builder = provideBuilder();
 
   beforeEach(() => {
@@ -25,6 +26,7 @@ describe('AtomBuildWaf', () => {
 
   describe('when wscript exists', () => {
     beforeEach(() => {
+      atom.config.set("atom-build-waf.jobs", setJobCount);
       fs.writeFileSync(directory + 'wscript', fs.readFileSync(`${__dirname}/wscript`));
     });
 
@@ -56,6 +58,24 @@ describe('AtomBuildWaf', () => {
         });
       });
     });
+
+    it('should use the configured number of jobs', () => {
+      waitsForPromise(() => {
+        return Promise.resolve(builder.settings(directory)).then((settings) => {
+        expect(settings.length).toBe(3); // default, configure, clean
+
+        const defaultTarget = settings[0]; // default MUST be first
+        expect(defaultTarget.name).toBe('Waf: default (no target)');
+        expect(defaultTarget.exec).toBe('waf');
+        //we expect the job count to match the settings
+        const jobCount = atom.config.get("atom-build-waf.jobs");
+        expect(jobCount).toBe(setJobCount);
+        expect(defaultTarget.args).toEqual([ '-j'+jobCount ]);
+        expect(defaultTarget.sh).toBe(false);
+        });
+      });
+    });
+
   });
 
   describe('when wscript does not exist', () => {
