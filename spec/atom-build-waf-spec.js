@@ -3,9 +3,9 @@
 import fs from 'fs-extra';
 import temp from 'temp';
 import { vouch } from 'atom-build-spec-helpers';
-import { provideBuilder } from '../lib/atom-build-waf';
+import { provideBuilder } from '../lib/atom-build-xwaf';
 
-describe('AtomBuildWaf', () => {
+describe('AtomBuildXWaf', () => {
   let directory;
   let builder;
   const setJobCount = 7;
@@ -13,7 +13,7 @@ describe('AtomBuildWaf', () => {
 
   beforeEach(() => {
     waitsForPromise(() => {
-      return vouch(temp.mkdir, 'atom-build-waf-spec-')
+      return vouch(temp.mkdir, 'atom-build-xwaf-spec-')
         .then((dir) => vouch(fs.realpath, dir))
         .then((dir) => (directory = `${dir}/`))
         .then((dir) => builder = new Builder(dir));
@@ -26,7 +26,7 @@ describe('AtomBuildWaf', () => {
 
   describe('when wscript exists', () => {
     beforeEach(() => {
-      atom.config.set("atom-build-waf.jobs", setJobCount);
+      atom.config.set("atom-build-xwaf.jobs", setJobCount);
       fs.writeFileSync(directory + 'wscript', fs.readFileSync(`${__dirname}/wscript`));
     });
 
@@ -40,19 +40,19 @@ describe('AtomBuildWaf', () => {
         expect(settings.length).toBe(3); // default, configure, clean
 
         const defaultTarget = settings[0]; // default MUST be first
-        expect(defaultTarget.name).toBe('Waf: default (no target)');
-        expect(defaultTarget.exec).toBe('waf');
+        expect(defaultTarget.name).toBe('XWaf: default (no target)');
+        expect(defaultTarget.exec).toBe('xwaf');
         expect(defaultTarget.sh).toBe(false);
 
         const configureTarget = settings[1]; // configure will be second
-        expect(configureTarget.name).toBe('Waf: configure');
-        expect(configureTarget.exec).toBe('waf');
+        expect(configureTarget.name).toBe('XWaf: configure');
+        expect(configureTarget.exec).toBe('xwaf');
         expect(configureTarget.args).toEqual([ 'configure' ]);
         expect(configureTarget.sh).toBe(false);
 
         const cleanTarget = settings[2]; // clean will be third
-        expect(cleanTarget.name).toBe('Waf: clean');
-        expect(cleanTarget.exec).toBe('waf');
+        expect(cleanTarget.name).toBe('XWaf: clean');
+        expect(cleanTarget.exec).toBe('xwaf');
         expect(cleanTarget.args).toEqual([ 'clean' ]);
         expect(cleanTarget.sh).toBe(false);
         });
@@ -65,10 +65,10 @@ describe('AtomBuildWaf', () => {
         expect(settings.length).toBe(3); // default, configure, clean
 
         const defaultTarget = settings[0]; // default MUST be first
-        expect(defaultTarget.name).toBe('Waf: default (no target)');
+        expect(defaultTarget.name).toBe('XWaf: default (no target)');
         expect(defaultTarget.exec).toBe('xwaf');
         //we expect the job count to match the settings
-        const jobCount = atom.config.get("atom-build-waf.jobs");
+        const jobCount = atom.config.get("atom-build-xwaf.jobs");
         expect(jobCount).toBe(setJobCount);
         expect(defaultTarget.args).toEqual([ '-j'+jobCount ]);
         expect(defaultTarget.sh).toBe(false);
