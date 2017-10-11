@@ -1,7 +1,7 @@
 {
   "name": "atom-build-xwaf",
   "description": "Runs xwaf through the atom-build interface",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "keywords": [
     "build",
     "compile",
