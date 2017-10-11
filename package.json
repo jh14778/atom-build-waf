@@ -1,21 +1,21 @@
 {
-  "name": "atom-build-waf",
-  "description": "Runs waf through the atom-build interface",
+  "name": "atom-build-xwaf",
+  "description": "Runs xwaf through the atom-build interface",
   "version": "0.2.0",
   "keywords": [
     "build",
     "compile",
-    "waf"
+    "xwaf"
   ],
-  "repository": "https://github.com/jimtahu/atom-build-waf",
+  "repository": "https://github.com/jh14778/atom-build-waf",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
-  "main": "./lib/atom-build-waf",
+  "main": "./lib/atom-build-xwaf",
   "providedServices": {
     "builder": {
-      "description": "Runs Waf",
+      "description": "Runs XWaf",
       "versions": {
         "2.0.0": "provideBuilder"
       }

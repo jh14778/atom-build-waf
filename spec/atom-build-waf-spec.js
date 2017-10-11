@@ -66,7 +66,7 @@ describe('AtomBuildWaf', () => {
 
         const defaultTarget = settings[0]; // default MUST be first
         expect(defaultTarget.name).toBe('Waf: default (no target)');
-        expect(defaultTarget.exec).toBe('waf');
+        expect(defaultTarget.exec).toBe('xwaf');
         //we expect the job count to match the settings
         const jobCount = atom.config.get("atom-build-waf.jobs");
         expect(jobCount).toBe(setJobCount);
