@@ -22,6 +22,7 @@
     }
   },
   "dependencies": {
+    "fs-finder": "^1.8.1",
     "voucher": "^0.1.2"
   },
   "devDependencies": {
